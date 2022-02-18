@@ -1,15 +1,12 @@
-import Image from 'next/image';
+import Header from '../components/Header/Header';
+import Welcome from '../components/Welcome/Welcome';
+import { Box } from '@chakra-ui/react';
 
 export default function Home() {
   return (
-    <div className='bg-[#161413] min-h-screen'>
-      <Image
-        src='https://i.postimg.cc/ht2vDgS7/quentin.jpg'
-        alt='Quentin'
-        height='1365'
-        width='2048'
-        layout='responsive'
-      />
-    </div>
+    <Box>
+      <Header />
+      <Welcome />
+    </Box>
   );
 }
