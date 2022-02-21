@@ -20,8 +20,8 @@ const Welcome = () => (
     />
     <Center bg='#171313' w='100%' display='flex'>
       <VStack
-        pt={'1rem'}
-        pb={'1rem'}
+        pt={['2rem', '2rem', '1rem', '1rem']}
+        pb={['2rem', '2rem', '1rem', '1rem']}
         pl={['1rem', '2rem', '2rem', '3rem']}
         pr={['1rem', '2rem', '2rem', '3rem']}
         divider={<StackDivider borderColor='gray.600' />}
@@ -29,7 +29,7 @@ const Welcome = () => (
         align='stretch'
       >
         <Text
-          fontSize={['xl', 'lg', '2xl', '3xl']}
+          fontSize={['xl', '3xl', 'md', '3xl', '4xl']}
           textAlign='center'
           bgGradient='linear(to-l, #7928CA, #FF0080)'
           bgClip='text'
@@ -38,7 +38,7 @@ const Welcome = () => (
           👋 Welcome my homepage!
         </Text>
         <Text
-          fontSize={['xs', 'sm', 'md', 'xl']}
+          fontSize={['xs', 'lg', 'md', 'xl', '2xl']}
           color='white'
           textAlign='center'
         >
