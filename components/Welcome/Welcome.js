@@ -29,13 +29,13 @@ const Welcome = () => (
         align='stretch'
       >
         <Text
-          fontSize={['xl', '3xl', 'md', '3xl', '4xl']}
+          fontSize={['xl', '3xl', 'xl', '2xl', '4xl']}
           textAlign='center'
           bgGradient='linear(to-l, #7928CA, #FF0080)'
           bgClip='text'
           fontWeight={700}
         >
-          👋 Welcome my homepage!
+          👋 Welcome to my homepage!
         </Text>
         <Text
           fontSize={['xs', 'lg', 'md', 'xl', '2xl']}

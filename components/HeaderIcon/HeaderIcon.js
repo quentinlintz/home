@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton } from '@chakra-ui/react';
+import { Icon } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
@@ -20,11 +20,11 @@ const HeaderIcon = ({ link, icon }) => (
     style={{ cursor: 'pointer' }}
   >
     <Link href={link} passHref>
-      <IconButton
+      <Icon
         as={icon}
         boxSize={[8, 10, 12]}
-        color='black'
-        _hover={{ bg: 'purple.200', transform: 'scale(0.95)' }}
+        color='white'
+        _hover={{ transform: 'scale(0.90)', transition: 'transform 1s' }}
       />
     </Link>
   </motion.div>
