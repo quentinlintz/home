@@ -1,7 +1,7 @@
 import React from 'react';
-import Link from 'next/link';
-import { Icon } from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const item = {
   hidden: { y: 20, opacity: 0 },
@@ -20,7 +20,12 @@ const HeaderIcon = ({ link, icon }) => (
     style={{ cursor: 'pointer' }}
   >
     <Link href={link} passHref>
-      <Icon as={icon} boxSize={[8, 10, 12]} color='white' />
+      <IconButton
+        as={icon}
+        boxSize={[8, 10, 12]}
+        color='black'
+        _hover={{ bg: 'purple.200', transform: 'scale(0.95)' }}
+      />
     </Link>
   </motion.div>
 );
