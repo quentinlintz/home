@@ -20,11 +20,7 @@ const HeaderIcon = ({ link, icon }) => (
     style={{ cursor: 'pointer' }}
   >
     <Link href={link} passHref>
-      <Icon
-        as={icon}
-        boxSize={{ base: '24px', md: '40px', lg: '56px' }}
-        color='white'
-      />
+      <Icon as={icon} boxSize={[8, 10, 12]} color='white' />
     </Link>
   </motion.div>
 );
