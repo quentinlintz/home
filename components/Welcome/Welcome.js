@@ -35,7 +35,7 @@ const Welcome = () => (
           bgClip='text'
           fontWeight={700}
         >
-          👋 Welcome my homepage!
+          👋 Welcome to my homepage!
         </Text>
         <Text
           fontSize={['xs', 'lg', 'md', 'xl', '2xl']}
