@@ -7,11 +7,10 @@ const defaultConfig = {
   author: {
     name: 'Quentin Lintz',
   },
-  defaultDescription: 'My homepage',
-  social: {
-    twitter: 'quentinlintz',
-  },
-  siteName: "Quentin Lintz's Homepage",
+  defaultDescription:
+    "I'm a software engineer currently working in fintech. Most of my time is spent working on new tech projects (like this site), reading, discovering new music, and weightlifting. Reach out to me on social media if you wanna chat!",
+  twitterHandle: '@quentinlintz',
+  twitterId: '3921636976',
 };
 
 const SEO = ({ description, title, image, slug, article }) => {
@@ -19,7 +18,8 @@ const SEO = ({ description, title, image, slug, article }) => {
     defaultTitle,
     defaultDescription,
     siteName,
-    social: { twitter },
+    twitterHandle,
+    twitterId,
     currentURL,
     defaultImage,
   } = defaultConfig;
@@ -57,7 +57,8 @@ const SEO = ({ description, title, image, slug, article }) => {
         content='summary_large_image'
         key='twcard'
       />
-      <meta name='twitter:creator' content={twitter} key='twhandle' />
+      <meta name='twitter:creator' content={twitterHandle} key='twhandle' />
+      <meta name='twitter:creator:id' content={twitterId} key='twid' />
       <meta
         name='twitter:title'
         content={`${title ? title : defaultTitle}`}
