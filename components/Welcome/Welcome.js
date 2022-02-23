@@ -29,23 +29,23 @@ const Welcome = () => (
         align='stretch'
       >
         <Text
-          fontSize={['xl', '3xl', 'xl', '2xl', '4xl']}
+          fontSize={['lg', '3xl', '2xl', '3xl', '4xl']}
           textAlign='center'
           bgGradient='linear(to-l, #7928CA, #FF0080)'
           bgClip='text'
           fontWeight={700}
         >
-          👋 Welcome to my homepage!
+          👋 Welcome to my site!
         </Text>
         <Text
           fontSize={['xs', 'lg', 'md', 'xl', '2xl']}
           color='white'
           textAlign='center'
         >
-          I&apos;m a software engineer with 7 years of experience and currently
-          work in fintech. Most of my time is spent working on new tech projects{' '}
-          <em>(like this site)</em>, reading, discovering new music, and
-          weightlifting. Reach out to me on social media if you wanna chat!
+          I&apos;m a software engineer currently working in fintech. Most of my
+          time is spent working on new tech projects <em>(like this site)</em>,
+          reading, discovering new music, and weightlifting. Reach out to me on
+          social media if you wanna chat!
         </Text>
       </VStack>
     </Center>
