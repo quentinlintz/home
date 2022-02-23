@@ -1,18 +1,17 @@
-import Head from 'next/head';
+import SEO from '../components/SEO/SEO';
 import Header from '../components/Header/Header';
 import Welcome from '../components/Welcome/Welcome';
 import { Container } from '@chakra-ui/react';
+import React from 'react';
 
 export default function Home() {
   return (
-    <div>
-      <Head>
-        <title>Home • Quentin Lintz</title>
-      </Head>
+    <React.Fragment>
+      <SEO />
       <Container maxW='1400px' centerContent>
         <Header />
         <Welcome />
       </Container>
-    </div>
+    </React.Fragment>
   );
 }
