@@ -13,7 +13,7 @@ const defaultConfig = {
   twitterId: '3921636976',
 };
 
-const SEO = ({ description, title, image, slug, article }) => {
+const SEO = ({ description, title, image, slug = '', article }) => {
   const {
     defaultTitle,
     defaultDescription,
