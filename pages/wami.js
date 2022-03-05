@@ -8,7 +8,7 @@ export default function Home() {
     <React.Fragment>
       <SEO
         title='Wami'
-        description='Wami (What Am I?) is an addictive word game. Try to guess the noun given six adjectives as hints. How many tries will it take you?'
+        description='Wami (What Am I?) is an addictive word game. Try to guess the noun given five adjectives as hints. How many tries will it take you?'
         slug='wami'
       />
       <Container maxW='1400px' centerContent>
