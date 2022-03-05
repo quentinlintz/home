@@ -5,7 +5,6 @@ import WordCard from '../WordCard/WordCard';
 const Wami = () => (
   <VStack p={8} spacing='2em'>
     <Text
-      fontweight='bold'
       textAlign='center'
       fontSize={['4xl', '6xl']}
       fontWeight='700'
@@ -22,11 +21,11 @@ const Wami = () => (
       <WordCard word='?' />
     </VStack>
     <Input
+      pt={8}
+      pb={8}
       fontSize={['1.5em', '2em']}
-      variant='flushed'
+      focusBorderColor='blue.300'
       color='white'
-      focusColor='#81E6D9'
-      errorBorderColor='#FEB2B2'
       placeholder='Take a guess'
     />
   </VStack>
