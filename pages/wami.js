@@ -1,5 +1,6 @@
 import SEO from '../components/SEO/SEO';
-import { Container, Text } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
+import Wami from '../components/Wami/Wami';
 import React from 'react';
 
 export default function Home() {
@@ -11,7 +12,7 @@ export default function Home() {
         slug='wami'
       />
       <Container maxW='1400px' centerContent>
-        <Text color={'white'}>What Am I?</Text>
+        <Wami />
       </Container>
     </React.Fragment>
   );
