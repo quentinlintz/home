@@ -20,12 +20,25 @@ const GuessSchema = yup.object({
   guess: yup
     .string()
     .max(20, 'Guess is too long.')
+    .matches(
+      /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,
+      'Guess can only contain letters.'
+    )
     .required('A guess is required.'),
 });
 
 const Wami = () => {
+  const [numGuess, setNumGuess] = useState(0);
+  const [prevGuess, setPrevGuess] = useState('');
+
   const checkGuess = (guess) => {
-    console.log(guess);
+    if (numGuess < 4) {
+      setNumGuess(numGuess + 1);
+      setPrevGuess(guess);
+    } else {
+      console.log('Game over');
+    }
+    console.log(numGuess);
   };
 
   return (
@@ -40,13 +53,12 @@ const Wami = () => {
         What Am I?
       </Text>
       <VStack spacing='1em' width='100%'>
-        <WordCard word='?' />
-        <WordCard word='?' />
-        <WordCard word='?' />
-        <WordCard word='?' />
-        <WordCard word='?' />
+        <WordCard word={numGuess >= 0 ? challengeData.hints[0] : '?'} />
+        <WordCard word={numGuess >= 1 ? challengeData.hints[1] : '?'} />
+        <WordCard word={numGuess >= 2 ? challengeData.hints[2] : '?'} />
+        <WordCard word={numGuess >= 3 ? challengeData.hints[3] : '?'} />
+        <WordCard word={numGuess >= 4 ? challengeData.hints[4] : '?'} />
       </VStack>
-
       <Formik
         initialValues={{ guess: '' }}
         validationSchema={GuessSchema}
@@ -70,6 +82,9 @@ const Wami = () => {
                 />
                 {form.errors.guess && form.touched.guess ? (
                   <FormErrorMessage>{form.errors.guess}</FormErrorMessage>
+                ) : null}
+                {prevGuess !== '' ? (
+                  <FormHelperText>I am not a {prevGuess}...</FormHelperText>
                 ) : (
                   <FormHelperText>
                     Guesses are case-insensitive, hit enter to submit.
