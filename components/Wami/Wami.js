@@ -3,12 +3,16 @@ import * as yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import {
   Text,
+  Center,
   VStack,
+  HStack,
   Input,
   FormControl,
+  IconButton,
   FormHelperText,
   FormErrorMessage,
 } from '@chakra-ui/react';
+import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import WordCard from '../WordCard/WordCard';
 
 const challengeData = {
@@ -50,10 +54,10 @@ const Wami = () => {
   };
 
   return (
-    <VStack pt={8} spacing='2em'>
+    <VStack pt={8} spacing={['1em', '1.5em']}>
       <Text
         textAlign='center'
-        fontSize={['4xl', '6xl']}
+        fontSize={['3xl', '6xl']}
         fontWeight='700'
         bgGradient='linear(to-l, blue.300, red.400)'
         bgClip='text'
@@ -61,7 +65,7 @@ const Wami = () => {
         What Am I?
       </Text>
       {gameOver || victory ? null : (
-        <VStack spacing='1em' width='100%'>
+        <VStack spacing={['0.5em', '1em']} width='100%'>
           <WordCard word={numGuess >= 0 ? challengeData.hints[0] : '?'} />
           <WordCard word={numGuess >= 1 ? challengeData.hints[1] : '?'} />
           <WordCard word={numGuess >= 2 ? challengeData.hints[2] : '?'} />
@@ -95,23 +99,39 @@ const Wami = () => {
                   isInvalid={form.errors.guess && form.touched.guess}
                   isDisabled={gameOver || victory}
                 >
-                  <Input
-                    {...field}
-                    pt={8}
-                    pb={8}
-                    fontSize={['1.5em', '2em']}
-                    focusBorderColor='blue.300'
-                    color='white'
-                    placeholder='Take a guess'
-                  />
+                  <Center>
+                    <HStack spacing={2}>
+                      <Input
+                        {...field}
+                        pt={[2, 8]}
+                        pb={[2, 8]}
+                        fontSize={['1em', '2em']}
+                        focusBorderColor='blue.300'
+                        color='white'
+                        placeholder='Take a guess'
+                      />
+                      <IconButton
+                        type='submit'
+                        variant='link'
+                        fontSize={['2xl', '4xl']}
+                        aria-label='Submit guess'
+                        color='white'
+                        icon={<BsFillArrowRightCircleFill />}
+                      />
+                    </HStack>
+                  </Center>
                   {form.errors.guess && form.touched.guess ? (
-                    <FormErrorMessage>{form.errors.guess}</FormErrorMessage>
+                    <FormErrorMessage fontSize={['0.75em', '1.5em']}>
+                      {form.errors.guess}
+                    </FormErrorMessage>
                   ) : null}
                   {prevGuess !== '' ? (
-                    <FormHelperText>I am not a {prevGuess}...</FormHelperText>
+                    <FormHelperText fontSize={['0.75em', '1.5em']}>
+                      I am not a {prevGuess}...
+                    </FormHelperText>
                   ) : (
-                    <FormHelperText>
-                      Guesses are case-insensitive, hit enter to submit.
+                    <FormHelperText fontSize={['0.75em', '1.5em']}>
+                      Guesses are case-insensitive.
                     </FormHelperText>
                   )}
                 </FormControl>
