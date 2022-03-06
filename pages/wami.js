@@ -1,7 +1,7 @@
-import SEO from '../components/SEO/SEO';
-import { Container } from '@chakra-ui/react';
-import Wami from '../components/Wami/Wami';
 import React from 'react';
+import { Container } from '@chakra-ui/react';
+import SEO from '../components/SEO/SEO';
+import Wami from '../components/Wami';
 
 export default function Home() {
   return (
