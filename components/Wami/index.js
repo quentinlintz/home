@@ -78,13 +78,15 @@ const Wami = () => {
       </Text>
       <VStack spacing={['0.5em', '1em']} width='100%'>
         {challengeData.hints.map((hint, index) => {
-          return (
-            <WordCard
-              key={index}
-              word={numGuess >= index ? hint : '?'}
-              updated={numGuess >= index ? true : false}
-            />
-          );
+          if (index <= numGuess) {
+            return (
+              <WordCard
+                key={index}
+                word={numGuess >= index ? hint : '?'}
+                updated={numGuess >= index ? true : false}
+              />
+            );
+          }
         })}
       </VStack>
       <Formik
@@ -113,6 +115,7 @@ const Wami = () => {
                       color='white'
                       placeholder='Take a guess'
                       disabled={victory || gameOver}
+                      autocomplete='off'
                     />
                     <motion.button
                       whileHover={{ scale: 1.1 }}
@@ -143,7 +146,7 @@ const Wami = () => {
                   </FormHelperText>
                 ) : (
                   <FormHelperText fontSize={['0.75em', '1.5em']}>
-                    Guesses are case-insensitive.
+                    Guess what is being described.
                   </FormHelperText>
                 )}
               </FormControl>
