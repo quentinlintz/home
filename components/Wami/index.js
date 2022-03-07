@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { useDisclosure } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import {
   Text,
   Center,
@@ -109,15 +110,20 @@ const Wami = () => {
                       placeholder='Take a guess'
                       disabled={victory || gameOver}
                     />
-                    <IconButton
-                      type='submit'
-                      variant='link'
-                      fontSize={['2xl', '4xl']}
-                      aria-label='Submit guess'
-                      color='white'
-                      icon={<BsFillArrowRightCircleFill />}
-                      disabled={victory || gameOver}
-                    />
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <IconButton
+                        type='submit'
+                        variant='link'
+                        fontSize={['2xl', '4xl']}
+                        aria-label='Submit guess'
+                        color='white'
+                        icon={<BsFillArrowRightCircleFill />}
+                        disabled={victory || gameOver}
+                      />
+                    </motion.button>
                   </HStack>
                 </Center>
                 {form.errors.guess && form.touched.guess ? (

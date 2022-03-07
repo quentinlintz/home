@@ -10,7 +10,7 @@ import {
 
 const EndModal = ({ isOpen, onClose, victory, answer }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isCentered isOpen={isOpen} onClose={onClose} motionPreset='scale'>
       <ModalOverlay />
       <ModalContent bg='black' p={4} m={4}>
         {victory ? (
