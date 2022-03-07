@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <React.Fragment>
       <SEO
-        title='Wami'
-        description='Wami (What Am I?) is an addictive word game. Try to guess the noun given five adjectives as hints. How many tries will it take you?'
+        title='WAMI'
+        description='WAMI (What Am I?) is an addictive word game. Try to guess the noun given five adjectives as hints. How many tries will it take you?'
         image={process.env.NEXT_PUBLIC_WAMI_PICTURE_URL}
         slug='wami'
       />

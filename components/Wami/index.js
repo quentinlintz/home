@@ -77,11 +77,15 @@ const Wami = () => {
         What Am I?
       </Text>
       <VStack spacing={['0.5em', '1em']} width='100%'>
-        <WordCard word={numGuess >= 0 ? challengeData.hints[0] : '?'} />
-        <WordCard word={numGuess >= 1 ? challengeData.hints[1] : '?'} />
-        <WordCard word={numGuess >= 2 ? challengeData.hints[2] : '?'} />
-        <WordCard word={numGuess >= 3 ? challengeData.hints[3] : '?'} />
-        <WordCard word={numGuess >= 4 ? challengeData.hints[4] : '?'} />
+        {challengeData.hints.map((hint, index) => {
+          return (
+            <WordCard
+              key={index}
+              word={numGuess >= index ? hint : '?'}
+              updated={numGuess >= index ? true : false}
+            />
+          );
+        })}
       </VStack>
       <Formik
         initialValues={{ guess: '' }}
@@ -114,15 +118,17 @@ const Wami = () => {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      <IconButton
-                        type='submit'
-                        variant='link'
-                        fontSize={['2xl', '4xl']}
-                        aria-label='Submit guess'
-                        color='white'
-                        icon={<BsFillArrowRightCircleFill />}
-                        disabled={victory || gameOver}
-                      />
+                      <Center>
+                        <IconButton
+                          type='submit'
+                          variant='link'
+                          fontSize={['2xl', '4xl']}
+                          aria-label='Submit guess'
+                          color='white'
+                          icon={<BsFillArrowRightCircleFill />}
+                          disabled={victory || gameOver}
+                        />
+                      </Center>
                     </motion.button>
                   </HStack>
                 </Center>

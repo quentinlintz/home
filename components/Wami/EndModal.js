@@ -12,7 +12,7 @@ const EndModal = ({ isOpen, onClose, victory, answer }) => {
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose} motionPreset='scale'>
       <ModalOverlay />
-      <ModalContent bg='black' p={4} m={4}>
+      <ModalContent bgGradient='linear(to-l, blue.300, red.400)' p={4} m={4}>
         {victory ? (
           <>
             <ModalHeader color='white'>
