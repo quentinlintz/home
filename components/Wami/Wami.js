@@ -126,7 +126,7 @@ const Wami = () => {
                       color='white'
                       placeholder='Take a guess'
                       disabled={victory || gameOver}
-                      autocomplete='off'
+                      autoComplete='off'
                     />
                     <motion.button
                       whileHover={{ scale: 1.1 }}
@@ -168,7 +168,7 @@ const Wami = () => {
       <EndModal
         isOpen={isOpen}
         onClose={onClose}
-        victory
+        victory={victory}
         answer={challengeData.answer}
       />
     </VStack>
