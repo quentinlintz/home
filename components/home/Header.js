@@ -1,11 +1,13 @@
 import React from 'react';
-import { HeaderIcon } from './';
+
 import { HStack, Spacer, Text, Box, Center } from '@chakra-ui/react';
 import {
   AiFillGithub,
   AiFillTwitterCircle,
   AiFillLinkedin,
 } from 'react-icons/ai';
+
+import { HeaderIcon } from './';
 
 const Header = () => (
   <HStack p={['4', '8']} w='100%' bgColor='#171313'>

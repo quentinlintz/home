@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import * as yup from 'yup';
-import { Formik, Form, Field } from 'formik';
+
 import { useDisclosure } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
 import {
   Text,
   Center,
@@ -14,7 +12,11 @@ import {
   FormHelperText,
   FormErrorMessage,
 } from '@chakra-ui/react';
+import { Formik, Form, Field } from 'formik';
+import { motion } from 'framer-motion';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
+import * as yup from 'yup';
+
 import { EndModal, WordCard } from '.';
 
 const challengeData = {

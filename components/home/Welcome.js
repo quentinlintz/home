@@ -1,13 +1,12 @@
 import React from 'react';
+
 import {
-  Box,
   Center,
   Image,
   SimpleGrid,
   StackDivider,
   Text,
   VStack,
-  Icon,
 } from '@chakra-ui/react';
 
 const Welcome = () => (

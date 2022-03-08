@@ -1,4 +1,6 @@
+
 import React from 'react';
+
 import { Icon } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';

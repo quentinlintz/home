@@ -1,7 +1,10 @@
+import React from 'react';
+
+import { Container } from '@chakra-ui/react';
+
+
 import { SEO } from '../components/common';
 import { Header, Welcome } from '../components/home';
-import { Container } from '@chakra-ui/react';
-import React from 'react';
 
 export default function Home() {
   return (
