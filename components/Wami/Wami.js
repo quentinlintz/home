@@ -54,6 +54,7 @@ const Wami = () => {
       return;
     }
 
+    // If all hints have been shown
     if (numGuess === 4) {
       setGameOver(true);
       setPrevGuess('');
