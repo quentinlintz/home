@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import * as yup from 'yup';
-import { Formik, Form, Field } from 'formik';
+
 import { useDisclosure } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
 import {
   Text,
   Center,
@@ -14,9 +12,12 @@ import {
   FormHelperText,
   FormErrorMessage,
 } from '@chakra-ui/react';
+import { Formik, Form, Field } from 'formik';
+import { motion } from 'framer-motion';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
-import WordCard from './WordCard';
-import EndModal from './EndModal';
+import * as yup from 'yup';
+
+import { EndModal, WordCard } from '.';
 
 const challengeData = {
   answer: 'ocean',
@@ -53,6 +54,7 @@ const Wami = () => {
       return;
     }
 
+    // If all hints have been shown
     if (numGuess === 4) {
       setGameOver(true);
       setPrevGuess('');
@@ -77,6 +79,15 @@ const Wami = () => {
         What Am I?
       </Text>
       <VStack spacing={['0.5em', '1em']} width='100%'>
+        <Text
+          textAlign='center'
+          fontSize={['sm', 'md']}
+          fontWeight='500'
+          letterSpacing='0.25em'
+          color='whiteAlpha.700'
+        >
+          HINTS
+        </Text>
         {challengeData.hints.map((hint, index) => {
           if (index <= numGuess) {
             return (
@@ -115,7 +126,7 @@ const Wami = () => {
                       color='white'
                       placeholder='Take a guess'
                       disabled={victory || gameOver}
-                      autocomplete='off'
+                      autoComplete='off'
                     />
                     <motion.button
                       whileHover={{ scale: 1.1 }}
@@ -157,7 +168,7 @@ const Wami = () => {
       <EndModal
         isOpen={isOpen}
         onClose={onClose}
-        victory
+        victory={victory}
         answer={challengeData.answer}
       />
     </VStack>

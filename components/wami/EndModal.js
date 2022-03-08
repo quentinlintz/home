@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Modal,
   ModalOverlay,
@@ -24,7 +25,9 @@ const EndModal = ({ isOpen, onClose, victory, answer }) => {
           </>
         ) : (
           <>
-            <ModalHeader color='white'>It was {answer}!</ModalHeader>
+            <ModalHeader color='white'>
+              It was {answer.toUpperCase()}!
+            </ModalHeader>
             <ModalBody color='white'>
               You almost had it today, come back tomorrow to try again.
             </ModalBody>

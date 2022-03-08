@@ -1,14 +1,16 @@
-import SEO from '../components/SEO/SEO';
-import Header from '../components/Header/Header';
-import Welcome from '../components/Welcome/Welcome';
-import { Container } from '@chakra-ui/react';
 import React from 'react';
+
+import { Container } from '@chakra-ui/react';
+
+
+import { SEO } from '../components/common';
+import { Header, Welcome } from '../components/home';
 
 export default function Home() {
   return (
     <React.Fragment>
       <SEO />
-      <Container maxW='1400px' centerContent>
+      <Container p={0} maxW='1600px' centerContent>
         <Header />
         <Welcome />
       </Container>

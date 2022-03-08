@@ -1,6 +1,8 @@
+
 import React from 'react';
-import { motion } from 'framer-motion';
+
 import { Box, Center } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
 const WordCard = ({ word, updated }) => {
   return (

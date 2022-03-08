@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { Container } from '@chakra-ui/react';
-import SEO from '../components/SEO/SEO';
-import Wami from '../components/Wami';
+
+import { SEO } from '../components/common';
+import { Wami } from '../components/wami';
 
 export default function Home() {
   return (
@@ -12,7 +14,7 @@ export default function Home() {
         image={process.env.NEXT_PUBLIC_WAMI_PICTURE_URL}
         slug='wami'
       />
-      <Container maxW='1400px' centerContent>
+      <Container p={0} maxW='1600px' centerContent>
         <Wami />
       </Container>
     </React.Fragment>
