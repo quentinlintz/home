@@ -3,7 +3,7 @@ import React from 'react';
 import { Container } from '@chakra-ui/react';
 
 import { SEO } from '../components/common';
-import { Wami } from '../components/Wami';
+import { Wami } from '../components/wami';
 
 export default function Home() {
   return (
