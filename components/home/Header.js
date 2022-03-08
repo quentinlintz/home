@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderIcon from '../HeaderIcon/HeaderIcon';
+import { HeaderIcon } from './';
 import { HStack, Spacer, Text, Box, Center } from '@chakra-ui/react';
 import {
   AiFillGithub,
