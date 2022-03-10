@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useDisclosure } from '@chakra-ui/react';
 import {
@@ -11,18 +11,15 @@ import {
   IconButton,
   FormHelperText,
   FormErrorMessage,
+  Spinner,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import { Formik, Form, Field } from 'formik';
 import { motion } from 'framer-motion';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import * as yup from 'yup';
 
 import { EndModal, WordCard } from '.';
-
-const challengeData = {
-  answer: 'ocean',
-  hints: ['open', 'great', 'vast', 'deep', 'atlantic'],
-};
 
 const GuessSchema = yup.object({
   guess: yup
@@ -39,26 +36,43 @@ const Wami = () => {
   React.useLayoutEffect = React.useEffect;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [challengeData, setChallengeData] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [victory, setVictory] = useState(false);
   const [numGuess, setNumGuess] = useState(0);
   const [prevGuess, setPrevGuess] = useState('');
+  const [processing, setProcessing] = useState(true);
+
+  const getNewChallenge = () => {
+    let attempt = 0;
+
+    do {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_WAMI_BACKEND_API}/random`)
+        .then((challenge) => setChallengeData(challenge.data))
+        .catch((error) => console.log(error));
+      attempt++;
+    } while (challengeData?.hints.includes('') && attempt < 5);
+
+    console.log('Attempts', attempt);
+    setProcessing(false);
+  };
 
   const checkGuess = (guess) => {
     // If the word was correctly guessed
-    if (challengeData.answer === guess.toLowerCase()) {
+    if (challengeData?.answer.toLowerCase() === guess.toLowerCase()) {
       setVictory(true);
       setPrevGuess('');
-      setNumGuess(4);
+      setNumGuess(7);
       onOpen();
       return;
     }
 
     // If all hints have been shown
-    if (numGuess === 4) {
+    if (numGuess === 7) {
       setGameOver(true);
       setPrevGuess('');
-      setNumGuess(4);
+      setNumGuess(7);
       onOpen();
       return;
     }
@@ -67,8 +81,10 @@ const Wami = () => {
     setPrevGuess(guess);
   };
 
+  useEffect(() => getNewChallenge(), []);
+
   return (
-    <VStack pt={8} spacing={['1em', '1.5em']}>
+    <VStack pt={8} pb={8} spacing={['1em', '1.5em']}>
       <Text
         textAlign='center'
         fontSize={['3xl', '6xl']}
@@ -86,19 +102,23 @@ const Wami = () => {
           letterSpacing='0.25em'
           color='whiteAlpha.700'
         >
-          HINTS
+          HINTS ({numGuess + 1} / 8)
         </Text>
-        {challengeData.hints.map((hint, index) => {
-          if (index <= numGuess) {
-            return (
-              <WordCard
-                key={index}
-                word={numGuess >= index ? hint : '?'}
-                updated={numGuess >= index ? true : false}
-              />
-            );
-          }
-        })}
+        {processing ? (
+          <Spinner />
+        ) : (
+          challengeData?.hints.map((hint, index) => {
+            if (index <= numGuess) {
+              return (
+                <WordCard
+                  key={index}
+                  word={numGuess >= index ? hint : '?'}
+                  updated={numGuess >= index ? true : false}
+                />
+              );
+            }
+          })
+        )}
       </VStack>
       <Formik
         initialValues={{ guess: '' }}
@@ -125,7 +145,7 @@ const Wami = () => {
                       focusBorderColor='blue.300'
                       color='white'
                       placeholder='Take a guess'
-                      disabled={victory || gameOver}
+                      disabled={victory || gameOver || processing}
                       autoComplete='off'
                     />
                     <motion.button
@@ -140,7 +160,7 @@ const Wami = () => {
                           aria-label='Submit guess'
                           color='white'
                           icon={<BsFillArrowRightCircleFill />}
-                          disabled={victory || gameOver}
+                          disabled={victory || gameOver || processing}
                         />
                       </Center>
                     </motion.button>
@@ -169,7 +189,7 @@ const Wami = () => {
         isOpen={isOpen}
         onClose={onClose}
         victory={victory}
-        answer={challengeData.answer}
+        answer={challengeData?.answer}
       />
     </VStack>
   );
