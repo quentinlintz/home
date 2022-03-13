@@ -21,6 +21,8 @@ import * as yup from 'yup';
 
 import { EndModal, WordCard } from '.';
 
+const TOTAL_HINTS = 8;
+
 const GuessSchema = yup.object({
   guess: yup
     .string()
@@ -44,17 +46,11 @@ const Wami = () => {
   const [processing, setProcessing] = useState(true);
 
   const getNewChallenge = () => {
-    let attempt = 0;
+    axios
+      .get(`${process.env.NEXT_PUBLIC_WAMI_BACKEND_API}/today`)
+      .then((challenge) => setChallengeData(challenge.data))
+      .catch((error) => console.log(error));
 
-    do {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_WAMI_BACKEND_API}/random`)
-        .then((challenge) => setChallengeData(challenge.data))
-        .catch((error) => console.log(error));
-      attempt++;
-    } while (challengeData?.hints.includes('') && attempt < 5);
-
-    console.log('Attempts', attempt);
     setProcessing(false);
   };
 
@@ -63,16 +59,16 @@ const Wami = () => {
     if (challengeData?.answer.toLowerCase() === guess.toLowerCase()) {
       setVictory(true);
       setPrevGuess('');
-      setNumGuess(7);
+      setNumGuess(TOTAL_HINTS - 1);
       onOpen();
       return;
     }
 
     // If all hints have been shown
-    if (numGuess === 7) {
+    if (numGuess === TOTAL_HINTS - 1) {
       setGameOver(true);
       setPrevGuess('');
-      setNumGuess(7);
+      setNumGuess(TOTAL_HINTS - 1);
       onOpen();
       return;
     }
@@ -87,7 +83,7 @@ const Wami = () => {
     <VStack pt={8} pb={8} spacing={['1em', '1.5em']}>
       <Text
         textAlign='center'
-        fontSize={['3xl', '6xl']}
+        fontSize={['5xl', '6xl']}
         fontWeight='700'
         bgGradient='linear(to-l, blue.300, red.400)'
         bgClip='text'
@@ -139,9 +135,9 @@ const Wami = () => {
                   <HStack spacing={2}>
                     <Input
                       {...field}
-                      pt={[2, 8]}
-                      pb={[2, 8]}
-                      fontSize={['1em', '2em']}
+                      pt={[4, 8]}
+                      pb={[4, 8]}
+                      fontSize={['1.4em', '2em']}
                       focusBorderColor='blue.300'
                       color='white'
                       placeholder='Take a guess'
@@ -156,7 +152,8 @@ const Wami = () => {
                         <IconButton
                           type='submit'
                           variant='link'
-                          fontSize={['2xl', '4xl']}
+                          fontSize={['3xl', '5xl']}
+                          pl={(0, 2)}
                           aria-label='Submit guess'
                           color='white'
                           icon={<BsFillArrowRightCircleFill />}
@@ -167,16 +164,16 @@ const Wami = () => {
                   </HStack>
                 </Center>
                 {form.errors.guess && form.touched.guess ? (
-                  <FormErrorMessage fontSize={['0.75em', '1.5em']}>
+                  <FormErrorMessage fontSize={['1em', '1.5em']}>
                     {form.errors.guess}
                   </FormErrorMessage>
                 ) : null}
                 {prevGuess !== '' ? (
-                  <FormHelperText fontSize={['0.75em', '1.5em']}>
+                  <FormHelperText fontSize={['1em', '1.5em']}>
                     I am not a {prevGuess}...
                   </FormHelperText>
                 ) : (
-                  <FormHelperText fontSize={['0.75em', '1.5em']}>
+                  <FormHelperText fontSize={['1em', '1.5em']}>
                     Guess what is being described.
                   </FormHelperText>
                 )}
