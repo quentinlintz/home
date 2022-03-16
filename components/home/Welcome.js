@@ -28,7 +28,7 @@ const Welcome = () => (
         align='stretch'
       >
         <Text
-          fontSize={['lg', '3xl', '2xl', '3xl', '4xl']}
+          fontSize={['3xl', '3xl', '2xl', '3xl', '4xl']}
           textAlign='center'
           bgGradient='linear(to-l, #7928CA, #FF0080)'
           bgClip='text'
@@ -37,9 +37,9 @@ const Welcome = () => (
           👋 Welcome to my site!
         </Text>
         <Text
-          fontSize={['xs', 'lg', 'md', 'xl', '2xl']}
+          fontSize={['2xl', 'lg', 'lg', 'xl', '2xl']}
           color='white'
-          textAlign='center'
+          textAlign='right'
         >
           I&apos;m a software engineer currently working in fintech. Most of my
           time is spent working on new tech projects <em>(like this site)</em>,
