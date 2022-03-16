@@ -1,3 +1,4 @@
+import scoreToEmoji from './scoreToEmoji';
 import SEO from './SEO';
 
-export { SEO };
+export { SEO, scoreToEmoji };
