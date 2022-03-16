@@ -58,7 +58,7 @@ My score: ${scoreToEmoji(score)}/8️⃣
               The word was {answer?.toUpperCase()} 🎉
             </ModalHeader>
             <ModalBody fontSize={['lg', 'xl']} color='white'>
-              Come back in tomorrow to play again!
+              Come back later to play again!
             </ModalBody>
           </>
         ) : (
@@ -67,7 +67,7 @@ My score: ${scoreToEmoji(score)}/8️⃣
               It was {answer?.toUpperCase()}!
             </ModalHeader>
             <ModalBody fontSize={['lg', 'xl']} color='white'>
-              You almost had it today, come back tomorrow hours to try again.
+              You almost had it today, come back later to try again.
             </ModalBody>
           </>
         )}
