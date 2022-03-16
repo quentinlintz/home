@@ -47,7 +47,11 @@ const Wami = () => {
 
   const getNewChallenge = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_WAMI_BACKEND_API}/today`)
+      .get(`${process.env.NEXT_PUBLIC_WAMI_BACKEND_API}/challenge`, {
+        headers: {
+          'x-api-key': process.env.NEXT_PUBLIC_WAMI_BACKEND_API_KEY,
+        },
+      })
       .then((challenge) => setChallengeData(challenge.data))
       .catch((error) => console.log(error));
 
@@ -103,7 +107,7 @@ const Wami = () => {
         {processing ? (
           <Spinner />
         ) : (
-          challengeData?.hints.map((hint, index) => {
+          challengeData?.hints?.map((hint, index) => {
             if (index <= numGuess) {
               return (
                 <WordCard
