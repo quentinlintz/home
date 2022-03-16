@@ -38,12 +38,11 @@ const Wami = () => {
   React.useLayoutEffect = React.useEffect;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [challengeData, setChallengeData] = useState(null);
+  const [challengeData, setChallengeData] = useState({});
   const [gameOver, setGameOver] = useState(false);
   const [victory, setVictory] = useState(false);
   const [numGuess, setNumGuess] = useState(0);
   const [prevGuess, setPrevGuess] = useState('');
-  const [processing, setProcessing] = useState(true);
 
   const getNewChallenge = () => {
     axios
@@ -54,8 +53,6 @@ const Wami = () => {
       })
       .then((challenge) => setChallengeData(challenge.data))
       .catch((error) => console.log(error));
-
-    setProcessing(false);
   };
 
   const checkGuess = (guess) => {
@@ -63,7 +60,6 @@ const Wami = () => {
     if (challengeData?.answer.toLowerCase() === guess.toLowerCase()) {
       setVictory(true);
       setPrevGuess('');
-      setNumGuess(TOTAL_HINTS - 1);
       onOpen();
       return;
     }
@@ -72,7 +68,6 @@ const Wami = () => {
     if (numGuess === TOTAL_HINTS - 1) {
       setGameOver(true);
       setPrevGuess('');
-      setNumGuess(TOTAL_HINTS - 1);
       onOpen();
       return;
     }
@@ -104,8 +99,8 @@ const Wami = () => {
         >
           HINTS ({numGuess + 1} / 8)
         </Text>
-        {processing ? (
-          <Spinner />
+        {challengeData === {} ? (
+          <Spinner color='white' />
         ) : (
           challengeData?.hints?.map((hint, index) => {
             if (index <= numGuess) {
@@ -145,7 +140,7 @@ const Wami = () => {
                       focusBorderColor='blue.300'
                       color='white'
                       placeholder='Take a guess'
-                      disabled={victory || gameOver || processing}
+                      disabled={victory || gameOver || challengeData === {}}
                       autoComplete='off'
                     />
                     <motion.button
@@ -161,7 +156,7 @@ const Wami = () => {
                           aria-label='Submit guess'
                           color='white'
                           icon={<BsFillArrowRightCircleFill />}
-                          disabled={victory || gameOver || processing}
+                          disabled={victory || gameOver || challengeData === {}}
                         />
                       </Center>
                     </motion.button>
@@ -190,7 +185,8 @@ const Wami = () => {
         isOpen={isOpen}
         onClose={onClose}
         victory={victory}
-        answer={challengeData?.answer}
+        challengeData={challengeData}
+        numGuess={numGuess}
       />
     </VStack>
   );
