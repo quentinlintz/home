@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import { Box, Center } from '@chakra-ui/react';
@@ -17,7 +16,7 @@ const WordCard = ({ word, updated }) => {
           color='whiteAlpha.800'
           bgGradient='linear(to-l, gray.700, gray.800)'
           fontWeight='semibold'
-          fontSize={['sm', '2xl']}
+          fontSize={'2xl'}
           textTransform='uppercase'
           borderRadius='lg'
         >
