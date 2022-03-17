@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Box,
@@ -13,14 +13,16 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import Countdown from 'react-countdown';
-import { BsFillShareFill } from 'react-icons/bs';
+import { BsFillShareFill, BsFillFileEarmarkCheckFill } from 'react-icons/bs';
 
 import { scoreToEmoji } from '../common';
 
 const EndModal = ({ isOpen, onClose, victory, challengeData, numGuess }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
   const { answer, date, hint } = challengeData || '';
   const score = victory ? numGuess + 1 : 9;
-  const title = `WAMI ${date} • Guess the Word • My score: ${score}/8`;
+  const title = `WAMI ${date} • Guess the Word`;
   const text = `WAMI ${date} • Guess the Word
 My score: ${scoreToEmoji(score)}/8️⃣
 
@@ -44,6 +46,9 @@ My score: ${scoreToEmoji(score)}/8️⃣
   const handleClick = async () => {
     if (navigator.share) {
       await navigator.share(shareData);
+    } else {
+      await navigator.clipboard.writeText(text);
+      setIsCopied(true);
     }
   };
 
@@ -78,15 +83,17 @@ My score: ${scoreToEmoji(score)}/8️⃣
         )}
         <ModalFooter color='white'>
           <Box fontSize='2xl' w='50%'>
-            <Countdown date={today} daysInHours />
+            <Countdown key={challengeData.date} date={today} daysInHours />
           </Box>
           <Button
-            rightIcon={<BsFillShareFill />}
+            rightIcon={
+              isCopied ? <BsFillFileEarmarkCheckFill /> : <BsFillShareFill />
+            }
             size='lg'
-            colorScheme='whiteAlpha'
+            colorScheme={isCopied ? 'green' : 'whiteAlpha'}
             onClick={handleClick}
           >
-            SHARE
+            {isCopied ? 'COPIED' : 'SHARE'}
           </Button>
         </ModalFooter>
         <ModalCloseButton color='white' />
