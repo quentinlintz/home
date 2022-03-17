@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Box,
+  Button,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -11,29 +12,29 @@ import {
   ModalCloseButton,
   HStack,
 } from '@chakra-ui/react';
-import moment from 'moment';
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  LinkedinShareButton,
-  LinkedinIcon,
-} from 'next-share';
 import Countdown from 'react-countdown';
+import { BsFillShareFill, BsFillFileEarmarkCheckFill } from 'react-icons/bs';
 
 import { scoreToEmoji } from '../common';
 
 const EndModal = ({ isOpen, onClose, victory, challengeData, numGuess }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
   const { answer, date, hint } = challengeData || '';
   const score = victory ? numGuess + 1 : 9;
-  const url = 'https://quentinlintz.com/wami';
-  const quote = `WAMI ${date} • Guess the Word • My score: ${score}/8`;
-  const title = `WAMI ${date} • Guess the Word
+  const title = `WAMI ${date} • Guess the Word`;
+  const text = `WAMI ${date} • Guess the Word
 My score: ${scoreToEmoji(score)}/8️⃣
 
 #WAMI`;
+  const url = 'https://quentinlintz.com/wami';
   const hashtag = '#WAMI';
+
+  const shareData = {
+    title,
+    text,
+    url,
+  };
 
   let today = new Date();
   const minuteOffset = today.getTimezoneOffset();
@@ -41,6 +42,15 @@ My score: ${scoreToEmoji(score)}/8️⃣
   today.setHours(0);
   today.setMinutes(minuteOffset * -1);
   today.setSeconds(0);
+
+  const handleClick = async () => {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      await navigator.clipboard.writeText(text);
+      setIsCopied(true);
+    }
+  };
 
   return (
     <Modal
@@ -72,22 +82,19 @@ My score: ${scoreToEmoji(score)}/8️⃣
           </>
         )}
         <ModalFooter color='white'>
-          <HStack w='100%'>
-            <Box fontSize='2xl' w='50%'>
-              <Countdown date={today} daysInHours />
-            </Box>
-            <HStack w='50%' spacing={['4', '6']}>
-              <FacebookShareButton url={url} quote={quote} hashtag={hashtag}>
-                <FacebookIcon size={[32, 48]} round />
-              </FacebookShareButton>
-              <TwitterShareButton url={url} title={title}>
-                <TwitterIcon size={[32, 48]} round />
-              </TwitterShareButton>
-              <LinkedinShareButton url={url} summary={title} source={url}>
-                <LinkedinIcon size={[32, 48]} round />
-              </LinkedinShareButton>
-            </HStack>
-          </HStack>
+          <Box fontSize='2xl' w='50%'>
+            <Countdown key={challengeData.date} date={today} daysInHours />
+          </Box>
+          <Button
+            rightIcon={
+              isCopied ? <BsFillFileEarmarkCheckFill /> : <BsFillShareFill />
+            }
+            size='lg'
+            colorScheme={isCopied ? 'green' : 'whiteAlpha'}
+            onClick={handleClick}
+          >
+            {isCopied ? 'COPIED' : 'SHARE'}
+          </Button>
         </ModalFooter>
         <ModalCloseButton color='white' />
       </ModalContent>
