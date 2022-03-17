@@ -44,14 +44,24 @@ const Wami = () => {
   const [numGuess, setNumGuess] = useState(0);
   const [prevGuess, setPrevGuess] = useState('');
 
-  const getNewChallenge = () => {
+  const now = new Date();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const year = now.getFullYear().toString();
+  const currentDate = parseInt(year + month + day);
+
+  const getNewChallenge = async () => {
     axios
       .get(`${process.env.NEXT_PUBLIC_WAMI_BACKEND_API}/challenge`, {
         headers: {
           'x-api-key': process.env.NEXT_PUBLIC_WAMI_BACKEND_API_KEY,
         },
       })
-      .then((challenge) => setChallengeData(challenge.data))
+      .then((challenge) => {
+        // Set this new challenge data
+        localStorage.setItem('challengeData', JSON.stringify(challenge));
+        setChallengeData(challenge.data);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -76,7 +86,21 @@ const Wami = () => {
     setPrevGuess(guess);
   };
 
-  useEffect(() => getNewChallenge(), []);
+  useEffect(() => {
+    // Get any saved challenge data
+    const savedChallengeData = JSON.parse(
+      localStorage.getItem('challengeData')
+    );
+
+    if (
+      savedChallengeData !== '' &&
+      savedChallengeData?.data.date !== currentDate
+    ) {
+      getNewChallenge();
+    } else {
+      setChallengeData(savedChallengeData.data);
+    }
+  }, []);
 
   return (
     <VStack pt={8} pb={8} spacing={['1em', '1.5em']}>
