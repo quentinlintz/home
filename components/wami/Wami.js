@@ -45,9 +45,9 @@ const Wami = () => {
   const [prevGuess, setPrevGuess] = useState('');
 
   const now = new Date();
-  const month = (now.getMonth() + 1).toString().padStart(2, '0');
-  const day = now.getDate().toString().padStart(2, '0');
-  const year = now.getFullYear().toString();
+  const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
+  const day = now.getUTCDate().toString().padStart(2, '0');
+  const year = now.getUTCFullYear().toString();
   const currentDate = parseInt(year + month + day);
 
   const getNewChallenge = async () => {
@@ -91,6 +91,7 @@ const Wami = () => {
     const savedChallengeData = JSON.parse(
       localStorage.getItem('challengeData')
     );
+    console.log(currentDate);
 
     if (
       savedChallengeData !== '' &&
