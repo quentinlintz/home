@@ -38,7 +38,7 @@ My score: ${scoreToEmoji(score)}/8️⃣
 
   let today = new Date();
   const minuteOffset = today.getTimezoneOffset();
-  today.setDate(today.getDate() + 1);
+  today.setDate(today.getUTCDate() + 1);
   today.setHours(0);
   today.setMinutes(minuteOffset * -1);
   today.setSeconds(0);
@@ -82,7 +82,7 @@ My score: ${scoreToEmoji(score)}/8️⃣
           </>
         )}
         <ModalFooter color='white'>
-          <Box fontSize='2xl' w='50%'>
+          <Box fontSize={['3xl', '4xl']} w='50%'>
             <Countdown key={challengeData.date} date={today} daysInHours />
           </Box>
           <Button
@@ -90,13 +90,13 @@ My score: ${scoreToEmoji(score)}/8️⃣
               isCopied ? <BsFillFileEarmarkCheckFill /> : <BsFillShareFill />
             }
             size='lg'
+            w='50%'
             colorScheme={isCopied ? 'green' : 'whiteAlpha'}
             onClick={handleClick}
           >
             {isCopied ? 'COPIED' : 'SHARE'}
           </Button>
         </ModalFooter>
-        <ModalCloseButton color='white' />
       </ModalContent>
     </Modal>
   );

@@ -59,7 +59,7 @@ const Wami = () => {
       })
       .then((challenge) => {
         // Set this new challenge data
-        localStorage.setItem('challengeData', JSON.stringify(challenge));
+        localStorage.setItem('challengeData', JSON.stringify(challenge.data));
         setChallengeData(challenge.data);
       })
       .catch((error) => console.log(error));
@@ -91,17 +91,47 @@ const Wami = () => {
     const savedChallengeData = JSON.parse(
       localStorage.getItem('challengeData')
     );
-    console.log(currentDate);
 
     if (
-      savedChallengeData !== '' &&
-      savedChallengeData?.data.date !== currentDate
+      savedChallengeData === null ||
+      savedChallengeData?.date !== currentDate
     ) {
       getNewChallenge();
     } else {
-      setChallengeData(savedChallengeData.data);
+      setChallengeData(savedChallengeData);
+    }
+
+    // Get any progress data
+    const savedProgress = JSON.parse(localStorage.getItem('progress'));
+    if (savedProgress === null || savedProgress?.date !== currentDate) {
+      const progress = {
+        date: currentDate,
+        numGuess,
+        gameOver,
+        victory,
+      };
+      localStorage.setItem('progress', JSON.stringify(progress));
+    } else {
+      const progress = JSON.parse(localStorage.getItem('progress'));
+      setNumGuess(progress.numGuess);
+      setGameOver(progress.gameOver);
+      setVictory(progress.victory);
+
+      if (progress.gameOver || progress.victory) {
+        onOpen();
+      }
     }
   }, []);
+
+  useEffect(() => {
+    const progress = {
+      date: currentDate,
+      numGuess,
+      gameOver,
+      victory,
+    };
+    localStorage.setItem('progress', JSON.stringify(progress));
+  }, [numGuess, gameOver, victory]);
 
   return (
     <VStack pt={8} pb={8} spacing={['1em', '1.5em']}>
