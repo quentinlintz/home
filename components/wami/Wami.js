@@ -20,6 +20,7 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import * as yup from 'yup';
 
 import { EndModal, WordCard } from '.';
+import { pageview, event } from '../common';
 
 const TOTAL_HINTS = 8;
 
@@ -69,6 +70,7 @@ const Wami = () => {
   const checkGuess = (guess) => {
     // If the word was correctly guessed
     if (challengeData?.answer.toLowerCase() === guess.toLowerCase()) {
+      event({ action: 'wami victory', params: { guesses: numGuess + 1 } });
       setVictory(true);
       setPrevGuess('');
       let currentScoreData = scoreData;
@@ -81,6 +83,7 @@ const Wami = () => {
 
     // If all hints have been shown
     if (numGuess === TOTAL_HINTS - 1) {
+      event({ action: 'wami game over' });
       setGameOver(true);
       setPrevGuess('');
       onOpen();
@@ -92,6 +95,8 @@ const Wami = () => {
   };
 
   useEffect(() => {
+    pageview('/wami');
+
     // Get any saved score data
     const savedScoreData = JSON.parse(localStorage.getItem('scoreData'));
 
