@@ -1,24 +1,17 @@
-const scoreToEmoji = (score) => {
-  switch (score) {
-    case 1:
-      return '1️⃣';
-    case 2:
-      return '2️⃣';
-    case 3:
-      return '3️⃣';
-    case 4:
-      return '4️⃣';
-    case 5:
-      return '5️⃣';
-    case 6:
-      return '6️⃣';
-    case 7:
-      return '7️⃣';
-    case 8:
-      return '8️⃣';
-    default:
-      return '❌';
-  }
+const WIDTH = 10;
+
+const scoreToEmoji = (scoreData) => {
+  const total = scoreData.reduce((prev, curr) => prev + curr, 0);
+  const normalized = scoreData.map((score) =>
+    Math.ceil((score / total) * WIDTH)
+  );
+  let graph = [];
+  normalized.forEach((score) => {
+    const black = WIDTH - score;
+    const red = score;
+    graph.push('🟥'.repeat(red) + '⬛️'.repeat(black));
+  });
+  return graph;
 };
 
 export default scoreToEmoji;
