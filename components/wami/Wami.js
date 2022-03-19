@@ -39,19 +39,30 @@ const Wami = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [challengeData, setChallengeData] = useState({});
+  const [scoreData, setScoreData] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [victory, setVictory] = useState(false);
   const [numGuess, setNumGuess] = useState(0);
   const [prevGuess, setPrevGuess] = useState('');
 
-  const getNewChallenge = () => {
+  const now = new Date();
+  const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
+  const day = now.getUTCDate().toString().padStart(2, '0');
+  const year = now.getUTCFullYear().toString();
+  const currentDate = parseInt(year + month + day);
+
+  const getNewChallenge = async () => {
     axios
       .get(`${process.env.NEXT_PUBLIC_WAMI_BACKEND_API}/challenge`, {
         headers: {
           'x-api-key': process.env.NEXT_PUBLIC_WAMI_BACKEND_API_KEY,
         },
       })
-      .then((challenge) => setChallengeData(challenge.data))
+      .then((challenge) => {
+        // Set this new challenge data
+        localStorage.setItem('challengeData', JSON.stringify(challenge.data));
+        setChallengeData(challenge.data);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -60,6 +71,10 @@ const Wami = () => {
     if (challengeData?.answer.toLowerCase() === guess.toLowerCase()) {
       setVictory(true);
       setPrevGuess('');
+      let currentScoreData = scoreData;
+      currentScoreData.data[numGuess] += 1;
+      setScoreData(currentScoreData);
+      localStorage.setItem('scoreData', JSON.stringify(scoreData));
       onOpen();
       return;
     }
@@ -76,7 +91,65 @@ const Wami = () => {
     setPrevGuess(guess);
   };
 
-  useEffect(() => getNewChallenge(), []);
+  useEffect(() => {
+    // Get any saved score data
+    const savedScoreData = JSON.parse(localStorage.getItem('scoreData'));
+
+    if (savedScoreData === null) {
+      const initialScoreData = {
+        data: [0, 0, 0, 0, 0, 0, 0, 0],
+      };
+      localStorage.setItem('scoreData', JSON.stringify(initialScoreData));
+      setScoreData(initialScoreData);
+    } else {
+      setScoreData(savedScoreData);
+    }
+
+    // Get any saved challenge data
+    const savedChallengeData = JSON.parse(
+      localStorage.getItem('challengeData')
+    );
+
+    if (
+      savedChallengeData === null ||
+      savedChallengeData?.date !== currentDate
+    ) {
+      getNewChallenge();
+    } else {
+      setChallengeData(savedChallengeData);
+    }
+
+    // Get any progress data
+    const savedProgress = JSON.parse(localStorage.getItem('progress'));
+    if (savedProgress === null || savedProgress?.date !== currentDate) {
+      const progress = {
+        date: currentDate,
+        numGuess,
+        gameOver,
+        victory,
+      };
+      localStorage.setItem('progress', JSON.stringify(progress));
+    } else {
+      const progress = JSON.parse(localStorage.getItem('progress'));
+      setNumGuess(progress.numGuess);
+      setGameOver(progress.gameOver);
+      setVictory(progress.victory);
+
+      if (progress.gameOver || progress.victory) {
+        onOpen();
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const progress = {
+      date: currentDate,
+      numGuess,
+      gameOver,
+      victory,
+    };
+    localStorage.setItem('progress', JSON.stringify(progress));
+  }, [numGuess, gameOver, victory]);
 
   return (
     <VStack pt={8} pb={8} spacing={['1em', '1.5em']}>
@@ -187,6 +260,7 @@ const Wami = () => {
         victory={victory}
         challengeData={challengeData}
         numGuess={numGuess}
+        scoreData={scoreData.data}
       />
     </VStack>
   );
