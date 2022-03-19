@@ -32,15 +32,22 @@ const EndModal = ({
   numGuess,
   scoreData,
 }) => {
+  const graph = scoreToEmoji(scoreData || [0, 0, 0, 0, 0, 0, 0, 0]);
   const [isCopied, setIsCopied] = useState(false);
 
   const { answer, date, hint } = challengeData || '';
   const score = victory ? numGuess + 1 : 9;
-  const title = `WAMI ${date} • Guess the Word`;
-  const text = `WAMI ${date} • Guess the Word
-My score: ${scoreToEmoji(score)}➖8️⃣
-
-#WAMI`;
+  const title = `✨ WAMI ${date} ✨`;
+  const text = `✨     #WAMI ${date}    ✨
+${graph[0]}
+${graph[1]}
+${graph[2]}
+${graph[3]}
+${graph[4]}
+${graph[5]}
+${graph[6]}
+${graph[7]}
+`;
   const url = 'https://quentinlintz.com/wami';
 
   const chartData = {
