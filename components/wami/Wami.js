@@ -70,7 +70,7 @@ const Wami = () => {
   const checkGuess = (guess) => {
     // If the word was correctly guessed
     if (challengeData?.answer.toLowerCase() === guess.toLowerCase()) {
-      event({ action: 'wami victory', params: { guesses: numGuess + 1 } });
+      event({ action: 'wami_victory', params: { guesses: numGuess + 1 } });
       setVictory(true);
       setPrevGuess('');
       let currentScoreData = scoreData;
@@ -83,7 +83,7 @@ const Wami = () => {
 
     // If all hints have been shown
     if (numGuess === TOTAL_HINTS - 1) {
-      event({ action: 'wami game over' });
+      event({ action: 'wami_game_over' });
       setGameOver(true);
       setPrevGuess('');
       onOpen();

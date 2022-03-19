@@ -38,7 +38,7 @@ const EndModal = ({
   const { answer, date, hint } = challengeData || '';
   const score = victory ? numGuess + 1 : 9;
   const title = `✨ WAMI ${date} ✨`;
-  const text = `✨     #WAMI ${date}    ✨
+  const text = `✨     #WAMI ${date}     ✨
 ${graph[0]}
 ${graph[1]}
 ${graph[2]}
