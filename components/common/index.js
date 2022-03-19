@@ -1,4 +1,5 @@
+import { pageview, event } from './analytics';
 import scoreToEmoji from './scoreToEmoji';
 import SEO from './SEO';
 
-export { SEO, scoreToEmoji };
+export { pageview, event, scoreToEmoji, SEO };
