@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Container } from '@chakra-ui/react';
 
-
 import { SEO } from '../components/common';
 import { Header, Welcome } from '../components/home';
 
