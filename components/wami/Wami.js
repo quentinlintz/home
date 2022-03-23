@@ -251,8 +251,8 @@ const Wami = () => {
                   </FormHelperText>
                 ) : (
                   <FormHelperText fontSize={['1em', '1.5em']}>
-                    It's {challengeData?.answer.length} letters long and starts
-                    with '{challengeData?.answer[0]}'
+                    It&apos;s {challengeData?.answer.length} letters long and
+                    starts with &apos;`{challengeData?.answer[0]}&apos;
                   </FormHelperText>
                 )}
               </FormControl>
