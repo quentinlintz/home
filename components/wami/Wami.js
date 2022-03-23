@@ -245,10 +245,16 @@ const Wami = () => {
                     {form.errors.guess}
                   </FormErrorMessage>
                 ) : null}
-                <FormHelperText fontSize={['1em', '1.5em']}>
-                  It's {challengeData?.answer.length} letters long and starts
-                  with '{challengeData?.answer[0]}'
-                </FormHelperText>
+                {numGuess < 3 ? (
+                  <FormHelperText fontSize={['1em', '1.5em']}>
+                    Guess what is being described.
+                  </FormHelperText>
+                ) : (
+                  <FormHelperText fontSize={['1em', '1.5em']}>
+                    It's {challengeData?.answer.length} letters long and starts
+                    with '{challengeData?.answer[0]}'
+                  </FormHelperText>
+                )}
               </FormControl>
             )}
           </Field>
