@@ -45,6 +45,7 @@ const Wami = () => {
   const [victory, setVictory] = useState(false);
   const [numGuess, setNumGuess] = useState(0);
   const [prevGuess, setPrevGuess] = useState('');
+  const [isRetired, setIsRetired] = useState(true);
 
   const now = new Date();
   const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
@@ -97,51 +98,53 @@ const Wami = () => {
   useEffect(() => {
     pageview('/wami');
 
-    // Get any saved score data
-    const savedScoreData = JSON.parse(localStorage.getItem('scoreData'));
+    if (!isRetired) {
+      // Get any saved score data
+      const savedScoreData = JSON.parse(localStorage.getItem('scoreData'));
 
-    if (savedScoreData === null) {
-      const initialScoreData = {
-        data: [0, 0, 0, 0, 0, 0, 0, 0],
-      };
-      localStorage.setItem('scoreData', JSON.stringify(initialScoreData));
-      setScoreData(initialScoreData);
-    } else {
-      setScoreData(savedScoreData);
-    }
+      if (savedScoreData === null) {
+        const initialScoreData = {
+          data: [0, 0, 0, 0, 0, 0, 0, 0],
+        };
+        localStorage.setItem('scoreData', JSON.stringify(initialScoreData));
+        setScoreData(initialScoreData);
+      } else {
+        setScoreData(savedScoreData);
+      }
 
-    // Get any saved challenge data
-    const savedChallengeData = JSON.parse(
-      localStorage.getItem('challengeData')
-    );
+      // Get any saved challenge data
+      const savedChallengeData = JSON.parse(
+        localStorage.getItem('challengeData')
+      );
 
-    if (
-      savedChallengeData === null ||
-      savedChallengeData?.date !== currentDate
-    ) {
-      getNewChallenge();
-    } else {
-      setChallengeData(savedChallengeData);
-    }
+      if (
+        savedChallengeData === null ||
+        savedChallengeData?.date !== currentDate
+      ) {
+        getNewChallenge();
+      } else {
+        setChallengeData(savedChallengeData);
+      }
 
-    // Get any progress data
-    const savedProgress = JSON.parse(localStorage.getItem('progress'));
-    if (savedProgress === null || savedProgress?.date !== currentDate) {
-      const progress = {
-        date: currentDate,
-        numGuess,
-        gameOver,
-        victory,
-      };
-      localStorage.setItem('progress', JSON.stringify(progress));
-    } else {
-      const progress = JSON.parse(localStorage.getItem('progress'));
-      setNumGuess(progress.numGuess);
-      setGameOver(progress.gameOver);
-      setVictory(progress.victory);
+      // Get any progress data
+      const savedProgress = JSON.parse(localStorage.getItem('progress'));
+      if (savedProgress === null || savedProgress?.date !== currentDate) {
+        const progress = {
+          date: currentDate,
+          numGuess,
+          gameOver,
+          victory,
+        };
+        localStorage.setItem('progress', JSON.stringify(progress));
+      } else {
+        const progress = JSON.parse(localStorage.getItem('progress'));
+        setNumGuess(progress.numGuess);
+        setGameOver(progress.gameOver);
+        setVictory(progress.victory);
 
-      if (progress.gameOver || progress.victory) {
-        onOpen();
+        if (progress.gameOver || progress.victory) {
+          onOpen();
+        }
       }
     }
   }, []);
@@ -156,7 +159,20 @@ const Wami = () => {
     localStorage.setItem('progress', JSON.stringify(progress));
   }, [numGuess, gameOver, victory]);
 
-  return (
+  return isRetired ? (
+    <Text
+      textAlign='center'
+      fontSize={['3xl', '4xl']}
+      fontWeight='700'
+      bgGradient='linear(to-l, blue.300, red.400)'
+      bgClip='text'
+      pt={24}
+    >
+      WAMI has been retired!
+      <br />
+      Thanks for playing!
+    </Text>
+  ) : (
     <VStack pt={8} pb={8} spacing={['1em', '1.5em']}>
       <Text
         textAlign='center'
